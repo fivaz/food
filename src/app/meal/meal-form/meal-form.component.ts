@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Meal} from "../meal";
 import {Category} from "../category.enum";
+import {MealService} from "../meal.service";
 
 @Component({
   selector: 'f-meal-form',
@@ -10,14 +11,14 @@ import {Category} from "../category.enum";
 export class MealFormComponent implements OnInit {
 
   visible: boolean = false;
-  mealForm: FormGroup = new FormGroup({id: new FormControl(), name: new FormControl(), category: new FormControl()});
+  mealForm!: FormGroup;
   @Output() onCreate = new EventEmitter();
   @Output() onEdit = new EventEmitter();
-  meal: Meal | undefined;
+  meal: Meal;
   categories: Category[] = Object.values(Category);
 
-  constructor(private formBuilder: FormBuilder) {
-    console.log(this.categories);
+  constructor(private formBuilder: FormBuilder, private api: MealService) {
+    this.meal = this.emptyMeal();
   }
 
   ngOnInit(): void {
@@ -30,9 +31,44 @@ export class MealFormComponent implements OnInit {
     this.buildForm();
   }
 
+  emptyMeal(): Meal {
+    return {id: 0, name: '', category: Category.breakfast};
+  }
+
   close() {
     this.visible = false;
-    this.meal = undefined;
+    this.meal = this.emptyMeal();
+  }
+
+  submit() {
+    this.updateAccount();
+    if (this.meal?.id)
+      this.edit();
+    else
+      this.create();
+  }
+
+  updateAccount() {
+    const id = this.mealForm.get('id')?.value;
+    const name = this.mealForm.get('name')?.value;
+    const category: Category = this.mealForm.get('category')?.value;
+    this.meal = {id, name, category};
+  }
+
+  create() {
+    this.api.create(this.meal)
+      .subscribe(meal => {
+        this.onCreate.emit(meal);
+        this.close();
+      });
+  }
+
+  edit() {
+    // this.accountService.edit(this.account)
+    //   .subscribe(account => {
+    //     this.onEdit.emit(account);
+    //     this.close();
+    //   });
   }
 
   buildForm() {

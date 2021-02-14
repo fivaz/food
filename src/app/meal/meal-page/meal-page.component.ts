@@ -39,5 +39,7 @@ export class MealPageComponent implements OnInit {
     this.meals.splice(index, 1);
   }
 
-
+  addAccount(meal: Meal) {
+    this.meals.push(meal);
+  }
 }

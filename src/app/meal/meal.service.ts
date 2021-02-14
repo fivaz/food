@@ -17,6 +17,10 @@ export class MealService {
     return this.http.get<Meal[]>(API_URL);
   }
 
+  create(meal: Meal) {
+    return this.http.post<Meal>(API_URL, meal);
+  }
+
   delete(id: number) {
     return this.http.delete(API_URL + '/' + id);
   }

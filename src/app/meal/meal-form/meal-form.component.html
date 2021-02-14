@@ -3,7 +3,7 @@
     <h2 class="f-1">{{getTitle()}}</h2>
     <button id="btn-close-modal" class="btn btn-outline-dark" (click)="close()">X</button>
   </div>
-  <form [formGroup]="mealForm">
+  <form [formGroup]="mealForm" (submit)="submit()">
     <input type="hidden">
     <div class="form-group">
       <label for="name">name</label>
