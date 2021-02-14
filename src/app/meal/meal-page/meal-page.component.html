@@ -3,8 +3,6 @@
     <h2 class="f-8">Meals</h2>
   </div>
 
-  <div *ngFor="let meal of meals">
-    {{meal.name}}
-  </div>
+  <f-meal-row [meal]="meal" *ngFor="let meal of meals"></f-meal-row>
 
 </main>
