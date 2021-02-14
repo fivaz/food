@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { MealPageComponent } from './meal/meal-page/meal-page.component';
 import { MealRowComponent } from './meal/meal-row/meal-row.component';
 import {HttpClientModule} from "@angular/common/http";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
