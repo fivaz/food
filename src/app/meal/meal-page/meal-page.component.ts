@@ -8,7 +8,7 @@ import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete
 })
 export class MealPageComponent implements OnInit {
 
-  meals: Meal[] | undefined;
+  meals: Meal[] = [];
   @ViewChild(ConfirmDeleteComponent, {static: false}) confirm!: ConfirmDeleteComponent;
 
   constructor(private api: MealService) {
@@ -20,5 +20,15 @@ export class MealPageComponent implements OnInit {
 
   openConfirm(id: number) {
     this.confirm.open(id);
+  }
+
+  removeMeal(mealId: number) {
+    this.api.delete(mealId).subscribe(() =>
+      this.removeMealById(mealId));
+  }
+
+  removeMealById(mealId: number) {
+    const index = this.meals.findIndex(meal => meal.id === mealId);
+    this.meals.splice(index, 1);
   }
 }
