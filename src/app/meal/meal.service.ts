@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Meal} from "./meal";
@@ -10,9 +10,14 @@ const API_URL = environment.apiUrl + '/meals';
 })
 export class MealService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   findAll() {
     return this.http.get<Meal[]>(API_URL);
+  }
+
+  delete(id: number) {
+    return this.http.delete(API_URL + '/' + id);
   }
 }
