@@ -3,6 +3,11 @@
     <h2 class="f-8">Meals</h2>
   </div>
 
-  <f-meal-row [meal]="meal" *ngFor="let meal of meals"></f-meal-row>
+  <f-meal-row [meal]="meal" *ngFor="let meal of meals"
+              (onDelete)="openConfirm($event)">
+  </f-meal-row>
+
+
+  <f-confirm-delete></f-confirm-delete>
 
 </main>

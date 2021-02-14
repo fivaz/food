@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import {Meal} from "../meal";
@@ -11,9 +11,11 @@ import {Meal} from "../meal";
 export class MealRowComponent implements OnInit {
 
   @Input() meal!: Meal;
+  @Output() onDelete = new EventEmitter();
+  @Output() onEdit = new EventEmitter();
 
-  edit = faPencilAlt;
-  delete = faTrash;
+  editIcon = faPencilAlt;
+  deleteIcon = faTrash;
 
   constructor() {
   }
@@ -21,4 +23,11 @@ export class MealRowComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  delete() {
+    this.onDelete.emit(this.meal.id);
+  }
+
+  edit() {
+    this.onEdit.emit(this.meal);
+  }
 }
