@@ -7,7 +7,12 @@
               (onDelete)="openConfirm($event)">
   </f-meal-row>
 
+  <f-meal-form></f-meal-form>
 
   <f-confirm-delete (onConfirm)="removeMeal($event)"></f-confirm-delete>
 
 </main>
+
+<footer>
+  <button class="footer-button btn btn-success" (click)="openForm()">Add Meal</button>
+</footer>

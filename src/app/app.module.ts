@@ -8,19 +8,23 @@ import { MealRowComponent } from './meal/meal-row/meal-row.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ConfirmDeleteComponent } from './shared/confirm-delete/confirm-delete.component';
+import { MealFormComponent } from './meal/meal-form/meal-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     MealPageComponent,
     MealRowComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    MealFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
