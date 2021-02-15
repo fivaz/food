@@ -27,26 +27,19 @@ export class MealFormComponent implements OnInit {
               private mealAPI: MealService,
               private ingredientAPI: IngredientService,
               public dialogRef: MatDialogRef<MealFormComponent>,
-              @Inject(MAT_DIALOG_DATA) data: any) {
-    this.meal = this.emptyMeal();
+              @Inject(MAT_DIALOG_DATA) public data: Meal) {
+    if (this.data)
+      this.meal = this.data;
+    else
+      this.meal = this.emptyMeal();
   }
 
   ngOnInit(): void {
     this.buildForm();
   }
 
-  open(meal?: Meal) {
-    if (meal)
-      this.meal = meal;
-    this.buildForm();
-  }
-
   emptyMeal(): Meal {
     return {id: 0, name: '', category: Category.breakfast};
-  }
-
-  save() {
-    this.dialogRef.close(this.mealForm.value);
   }
 
   close() {
@@ -72,16 +65,15 @@ export class MealFormComponent implements OnInit {
   create() {
     this.mealAPI.create(this.meal)
       .subscribe(meal => {
-        this.onCreate.emit(meal);
-        this.close();
+        this.dialogRef.close(meal);
       });
   }
 
   edit() {
     this.mealAPI.edit(this.meal)
       .subscribe(meal => {
-        this.onEdit.emit(meal);
-        this.close();
+        // this.onEdit.emit(meal);
+        this.dialogRef.close(meal);
       });
   }
 

@@ -20,7 +20,7 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent">
+          <button mat-icon-button color="accent" (click)="openDialog(i)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
@@ -34,6 +34,7 @@
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
     </table>
+
     <!--    <f-meal-row [meal]="meal" *ngFor="let meal of meals"-->
     <!--                (onDelete)="openConfirm($event)"-->
     <!--                (onEdit)="openForm($event)">-->
@@ -45,9 +46,5 @@
 
     <!--    <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>-->
   </mat-card-content>
-
-  <mat-card-footer>
-    <button class="footer-button btn btn-success" (click)="openForm()">Add Meal</button>
-  </mat-card-footer>
 </mat-card>
 

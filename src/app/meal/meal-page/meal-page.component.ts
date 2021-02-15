@@ -4,6 +4,7 @@ import {MealService} from "../meal.service";
 import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete.component";
 import {MealFormComponent} from "../meal-form/meal-form.component";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatTable} from "@angular/material/table";
 
 @Component({
   templateUrl: './meal-page.component.html',
@@ -16,6 +17,7 @@ export class MealPageComponent implements OnInit {
   //TODO check if all these ! are the best practices
   @ViewChild(MealFormComponent, {static: false}) form!: MealFormComponent;
   @ViewChild(ConfirmDeleteComponent, {static: false}) confirm!: ConfirmDeleteComponent;
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   constructor(private api: MealService, public dialog: MatDialog) {
   }
@@ -24,21 +26,40 @@ export class MealPageComponent implements OnInit {
     this.api.findAll().subscribe(meals => this.meals = meals, console.log);
   }
 
-  openForm(meal?: Meal) {
-    this.form.open(meal);
-  }
+  openDialog(itemIndex?: number) {
+    console.log(itemIndex);
 
-  openDialog() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    dialogConfig.data = {
-      name: 'testando'
-    };
+    if (itemIndex != undefined) {
+      dialogConfig.data = this.meals[itemIndex];
+    }
 
-    this.dialog.open(MealFormComponent, dialogConfig);
+    const dialogRef = this.dialog.open(MealFormComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      meal => {
+        if (meal != undefined) {
+          this.addOrEditMeal(meal);
+        }
+      }
+    );
+  }
+
+  addOrEditMeal(newMeal: Meal) {
+    console.log(newMeal);
+    const index = this.meals.findIndex(meal => meal.id === newMeal.id);
+    console.log(index);
+    if (index == -1) {
+      this.meals.push(newMeal);
+    } else {
+      this.meals.splice(index, 1);
+      this.meals[index] = newMeal;
+    }
+    this.table.renderRows();
   }
 
   openConfirm(id: number) {
@@ -55,13 +76,12 @@ export class MealPageComponent implements OnInit {
     this.meals.splice(index, 1);
   }
 
-  addMeal(meal: Meal) {
-    this.meals.push(meal);
-  }
-
-  updateMeal(newMeal: Meal) {
-    const index = this.meals.findIndex(meal => meal.id === newMeal.id);
-    this.meals.splice(index, 1);
-    this.meals[index] = newMeal;
-  }
+  // addMeal(meal: Meal) {
+  // }
+  //
+  // updateMeal(newMeal: Meal) {
+  //   const index = this.meals.findIndex(meal => meal.id === newMeal.id);
+  //   this.meals.splice(index, 1);
+  //   this.meals[index] = newMeal;
+  // }
 }
