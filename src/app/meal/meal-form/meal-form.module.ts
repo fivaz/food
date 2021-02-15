@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MealFormComponent} from "./meal-form.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -9,6 +10,7 @@ import {MealFormComponent} from "./meal-form.component";
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ],
   exports: [MealFormComponent]
 })

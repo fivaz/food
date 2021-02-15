@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Meal} from "../meal";
 import {Category} from "../category.enum";
 import {MealService} from "../meal.service";
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {IngredientService} from "../../ingredient/ingredient.service";
+import {Ingredient} from "../../ingredient/ingredient";
 
 @Component({
   selector: 'f-meal-form',
@@ -16,8 +19,12 @@ export class MealFormComponent implements OnInit {
   @Output() onEdit = new EventEmitter();
   meal: Meal;
   categories: Category[] = Object.values(Category);
+  searchIcon = faSearch;
+  ingredients: Ingredient[] = [];
 
-  constructor(private formBuilder: FormBuilder, private api: MealService) {
+  constructor(private formBuilder: FormBuilder,
+              private mealAPI: MealService,
+              private ingredientAPI: IngredientService) {
     this.meal = this.emptyMeal();
   }
 
@@ -57,7 +64,7 @@ export class MealFormComponent implements OnInit {
   }
 
   create() {
-    this.api.create(this.meal)
+    this.mealAPI.create(this.meal)
       .subscribe(meal => {
         this.onCreate.emit(meal);
         this.close();
@@ -65,7 +72,7 @@ export class MealFormComponent implements OnInit {
   }
 
   edit() {
-    this.api.edit(this.meal)
+    this.mealAPI.edit(this.meal)
       .subscribe(meal => {
         this.onEdit.emit(meal);
         this.close();
@@ -78,6 +85,9 @@ export class MealFormComponent implements OnInit {
       name: [this.meal?.name || '', Validators.required],
       category: [this.meal?.category || this.categories[0]],
     });
+
+    this.ingredientAPI.findAll()
+      .subscribe(ingredients => this.ingredients = ingredients, console.log);
   }
 
   getTitle(): string {

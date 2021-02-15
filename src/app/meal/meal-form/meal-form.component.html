@@ -1,25 +1,35 @@
 <div *ngIf="visible" class="my-modal">
   <div class="d-flex align-items-center">
     <h2 class="f-1">{{getTitle()}}</h2>
-    <button id="btn-close-modal" class="btn btn-outline-dark" (click)="close()">X</button>
+    <button (click)="close()" id="btn-close-modal" class="btn btn-outline-dark">X</button>
   </div>
   <form [formGroup]="mealForm" (submit)="submit()">
     <input type="hidden">
     <div class="form-group">
       <label for="name">name</label>
-      <input formControlName="name" class="form-control" placeholder="name" id="name" autofocus>
+      <input formControlName="name" id="name" class="form-control" placeholder="name" autofocus>
       <small *ngIf="mealForm.get('name')?.errors?.required" class="text-danger d-block mt-2">
         account name is required!
       </small>
     </div>
     <div class="form-group">
       <label for="category">category</label>
-      <select formControlName="category" class="form-control" id="category">
+      <select formControlName="category" id="category" class="form-control">
         <option *ngFor="let category of categories" [value]="category">{{category}}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="ingredients">ingredients</label>
+      <div class="d-flex">
+        <input formControlName="name" id="ingredients" class="form-control"
+               placeholder="type the name of ingredient..." autocomplete="off">
+        <button class="ml-1 btn btn-info col-2">
+          <fa-icon [icon]="searchIcon"></fa-icon>
+        </button>
+      </div>
+    </div>
     <div>
-      <button [disabled]="mealForm.invalid" type="submit" class="btn-lg btn-block btn-success d-block m-auto">
+      <button [disabled]="mealForm.invalid" class="btn-lg btn-block btn-success d-block m-auto" type="submit">
         {{getTitle()}}
       </button>
     </div>
