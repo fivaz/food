@@ -43,22 +43,18 @@ export class MealPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       meal => {
         if (meal != undefined) {
-          this.addOrEditMeal(meal);
+          this.addOrUpdateMeal(meal);
         }
       }
     );
   }
 
-  addOrEditMeal(newMeal: Meal) {
-    console.log(newMeal);
+  addOrUpdateMeal(newMeal: Meal) {
     const index = this.meals.findIndex(meal => meal.id === newMeal.id);
-    console.log(index);
-    if (index == -1) {
+    if (index == -1)
       this.meals.push(newMeal);
-    } else {
-      this.meals.splice(index, 1);
+    else
       this.meals[index] = newMeal;
-    }
     this.table.renderRows();
   }
 
@@ -75,13 +71,4 @@ export class MealPageComponent implements OnInit {
     const index = this.meals.findIndex(meal => meal.id === mealId);
     this.meals.splice(index, 1);
   }
-
-  // addMeal(meal: Meal) {
-  // }
-  //
-  // updateMeal(newMeal: Meal) {
-  //   const index = this.meals.findIndex(meal => meal.id === newMeal.id);
-  //   this.meals.splice(index, 1);
-  //   this.meals[index] = newMeal;
-  // }
 }

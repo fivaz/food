@@ -55,26 +55,18 @@ export class MealFormComponent implements OnInit {
   }
 
   updateAccount() {
-    this.meal = {
-      id: this.mealForm.get('id')?.value,
-      name: this.mealForm.get('name')?.value,
-      category: this.mealForm.get('category')?.value
-    };
+    this.meal.name = this.mealForm.get('name')?.value;
+    this.meal.category = this.mealForm.get('category')?.value;
   }
 
   create() {
     this.mealAPI.create(this.meal)
-      .subscribe(meal => {
-        this.dialogRef.close(meal);
-      });
+      .subscribe(meal => this.dialogRef.close(meal));
   }
 
   edit() {
     this.mealAPI.edit(this.meal)
-      .subscribe(meal => {
-        // this.onEdit.emit(meal);
-        this.dialogRef.close(meal);
-      });
+      .subscribe(meal => this.dialogRef.close(meal));
   }
 
   buildForm() {
