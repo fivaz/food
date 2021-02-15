@@ -78,3 +78,6 @@ footer {
 .clr-green {
   background-color: #28a745;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
