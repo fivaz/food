@@ -14,7 +14,7 @@ import {MealPageModule} from "./meal/meal-page/meal-page.module";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MealPageModule
+    MealPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,14 +19,11 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="ingredients">ingredients</label>
-      <div class="d-flex">
-        <input formControlName="name" id="ingredients" class="form-control"
-               placeholder="type the name of ingredient..." autocomplete="off">
-        <button class="ml-1 btn btn-info col-2">
-          <fa-icon [icon]="searchIcon"></fa-icon>
-        </button>
-      </div>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
+          {{ingredient}}
+        </mat-option>
+      </mat-autocomplete>
     </div>
     <div>
       <button [disabled]="mealForm.invalid" class="btn-lg btn-block btn-success d-block m-auto" type="submit">
