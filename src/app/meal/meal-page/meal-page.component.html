@@ -1,21 +1,53 @@
-<main class="container">
-  <div class="d-flex align-items-baseline">
-    <h2 class="f-8">Meals</h2>
-  </div>
+<mat-toolbar color="primary">
+  <span>Waser Food</span>
+</mat-toolbar>
 
-  <f-meal-row [meal]="meal" *ngFor="let meal of meals"
-              (onDelete)="openConfirm($event)"
-              (onEdit)="openForm($event)">
-  </f-meal-row>
+<mat-card>
 
-  <f-meal-form (onCreate)="addMeal($event)"
-               (onEdit)="updateMeal($event)">
-  </f-meal-form>
+  <mat-card-title>Meals</mat-card-title>
 
-  <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>
+  <mat-card-content>
+    <table mat-table [dataSource]="meals" class="mat-elevation-z8">
 
-</main>
+      <mat-text-column name="category"></mat-text-column>
+      <mat-text-column name="name"></mat-text-column>
 
-<footer>
-  <button class="footer-button btn btn-success" (click)="openForm()">Add Meal</button>
-</footer>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="addNew()">
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+    <!--    <f-meal-row [meal]="meal" *ngFor="let meal of meals"-->
+    <!--                (onDelete)="openConfirm($event)"-->
+    <!--                (onEdit)="openForm($event)">-->
+    <!--    </f-meal-row>-->
+
+    <!--    <f-meal-form (onCreate)="addMeal($event)"-->
+    <!--                 (onEdit)="updateMeal($event)">-->
+    <!--    </f-meal-form>-->
+
+    <!--    <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>-->
+  </mat-card-content>
+
+  <mat-card-footer>
+    <button class="footer-button btn btn-success" (click)="openForm()">Add Meal</button>
+  </mat-card-footer>
+</mat-card>
+

@@ -5,11 +5,13 @@ import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete
 import {MealFormComponent} from "../meal-form/meal-form.component";
 
 @Component({
-  templateUrl: './meal-page.component.html'
+  templateUrl: './meal-page.component.html',
+  styleUrls: ['./meal-page.component.css']
 })
 export class MealPageComponent implements OnInit {
 
   meals: Meal[] = [];
+  columnsToDisplay = ['name', 'category', 'actions'];
   //TODO check if all these ! are the best practices
   @ViewChild(MealFormComponent, {static: false}) form!: MealFormComponent;
   @ViewChild(ConfirmDeleteComponent, {static: false}) confirm!: ConfirmDeleteComponent;
@@ -47,5 +49,9 @@ export class MealPageComponent implements OnInit {
     const index = this.meals.findIndex(meal => meal.id === newMeal.id);
     this.meals.splice(index, 1);
     this.meals[index] = newMeal;
+  }
+
+  addNew(){
+    console.log("addNew pressed");
   }
 }
