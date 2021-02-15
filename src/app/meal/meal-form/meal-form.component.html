@@ -1,34 +1,25 @@
-<div *ngIf="visible" class="my-modal">
-  <div class="d-flex align-items-center">
-    <h2 class="f-1">{{getTitle()}}</h2>
-    <button (click)="close()" id="btn-close-modal" class="btn btn-outline-dark">X</button>
-  </div>
-  <form [formGroup]="mealForm" (submit)="submit()">
-    <input type="hidden">
-    <div class="form-group">
-      <label for="name">name</label>
-      <input formControlName="name" id="name" class="form-control" placeholder="name" autofocus>
-      <small *ngIf="mealForm.get('name')?.errors?.required" class="text-danger d-block mt-2">
-        account name is required!
+<div>
+  <h2 mat-dialog-title class="f-1">{{getTitle()}}</h2>
+
+  <mat-dialog-content [formGroup]="mealForm" (submit)="submit()">
+
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name">
+      <small *ngIf="mealForm.get('name')?.errors?.required" class="text-danger">
+        name is required!
       </small>
-    </div>
-    <div class="form-group">
-      <label for="category">category</label>
-      <select formControlName="category" id="category" class="form-control">
-        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
-          {{ingredient}}
-        </mat-option>
-      </mat-autocomplete>
-    </div>
-    <div>
-      <button [disabled]="mealForm.invalid" class="btn-lg btn-block btn-success d-block m-auto" type="submit">
-        {{getTitle()}}
-      </button>
-    </div>
-  </form>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Select category" formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button [disabled]="mealForm.invalid" class="mat-raised-button mat-primary">Save</button>
+  </mat-dialog-actions>
 </div>

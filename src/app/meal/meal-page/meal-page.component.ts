@@ -3,6 +3,7 @@ import {Meal} from "../meal";
 import {MealService} from "../meal.service";
 import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete.component";
 import {MealFormComponent} from "../meal-form/meal-form.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 @Component({
   templateUrl: './meal-page.component.html',
@@ -16,7 +17,7 @@ export class MealPageComponent implements OnInit {
   @ViewChild(MealFormComponent, {static: false}) form!: MealFormComponent;
   @ViewChild(ConfirmDeleteComponent, {static: false}) confirm!: ConfirmDeleteComponent;
 
-  constructor(private api: MealService) {
+  constructor(private api: MealService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -25,6 +26,19 @@ export class MealPageComponent implements OnInit {
 
   openForm(meal?: Meal) {
     this.form.open(meal);
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      name: 'testando'
+    };
+
+    this.dialog.open(MealFormComponent, dialogConfig);
   }
 
   openConfirm(id: number) {
@@ -49,9 +63,5 @@ export class MealPageComponent implements OnInit {
     const index = this.meals.findIndex(meal => meal.id === newMeal.id);
     this.meals.splice(index, 1);
     this.meals[index] = newMeal;
-  }
-
-  addNew(){
-    console.log("addNew pressed");
   }
 }

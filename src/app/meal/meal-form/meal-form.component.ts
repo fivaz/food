@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Meal} from "../meal";
 import {Category} from "../category.enum";
@@ -6,14 +6,15 @@ import {MealService} from "../meal.service";
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {IngredientService} from "../../ingredient/ingredient.service";
 import {Ingredient} from "../../ingredient/ingredient";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'f-meal-form',
-  templateUrl: './meal-form.component.html'
+  templateUrl: './meal-form.component.html',
+  styleUrls: ['./meal-form.component.css'],
 })
 export class MealFormComponent implements OnInit {
 
-  visible: boolean = false;
   mealForm!: FormGroup;
   @Output() onCreate = new EventEmitter();
   @Output() onEdit = new EventEmitter();
@@ -24,15 +25,17 @@ export class MealFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private mealAPI: MealService,
-              private ingredientAPI: IngredientService) {
+              private ingredientAPI: IngredientService,
+              public dialogRef: MatDialogRef<MealFormComponent>,
+              @Inject(MAT_DIALOG_DATA) data: any) {
     this.meal = this.emptyMeal();
   }
 
   ngOnInit(): void {
+    this.buildForm();
   }
 
   open(meal?: Meal) {
-    this.visible = true;
     if (meal)
       this.meal = meal;
     this.buildForm();
@@ -42,9 +45,12 @@ export class MealFormComponent implements OnInit {
     return {id: 0, name: '', category: Category.breakfast};
   }
 
+  save() {
+    this.dialogRef.close(this.mealForm.value);
+  }
+
   close() {
-    this.visible = false;
-    this.meal = this.emptyMeal();
+    this.dialogRef.close();
   }
 
   submit() {
@@ -81,7 +87,6 @@ export class MealFormComponent implements OnInit {
 
   buildForm() {
     this.mealForm = this.formBuilder.group({
-      id: [this.meal?.id || ''],
       name: [this.meal?.name || '', Validators.required],
       category: [this.meal?.category || this.categories[0]],
     });

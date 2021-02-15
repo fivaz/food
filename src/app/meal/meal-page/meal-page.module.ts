@@ -10,21 +10,27 @@ import {MatTableModule} from "@angular/material/table";
 import {MealPageComponent} from "./meal-page.component";
 import {ConfirmDeleteModule} from "../../shared/confirm-delete/confirm-delete.module";
 import {MatIconModule} from "@angular/material/icon";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MealFormComponent} from "../meal-form/meal-form.component";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [MealPageComponent],
   imports: [
     CommonModule,
-    MealFormModule,
-    MealRowModule,
-    ConfirmDeleteModule,
     MatSliderModule,
     MatToolbarModule,
     MatCardModule,
     MatTableModule,
     MatIconModule,
+    MatDialogModule,
+    ConfirmDeleteModule,
+    MealFormModule,
+    MealRowModule,
+    MatButtonModule,
   ],
-  exports: [MealPageComponent]
+  exports: [MealPageComponent],
+  entryComponents: [MealFormComponent],
 })
 export class MealPageModule {
 }

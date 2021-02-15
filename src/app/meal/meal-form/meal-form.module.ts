@@ -4,6 +4,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MealFormComponent} from "./meal-form.component";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -13,6 +17,10 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     ReactiveFormsModule,
     FontAwesomeModule,
     MatAutocompleteModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [MealFormComponent]
 })
