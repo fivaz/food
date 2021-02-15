@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MealFormModule} from "../meal-form/meal-form.module";
-import {MealRowModule} from "../meal-row/meal-row.module";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
@@ -26,7 +25,6 @@ import {MatButtonModule} from "@angular/material/button";
     MatDialogModule,
     ConfirmDeleteModule,
     MealFormModule,
-    MealRowModule,
     MatButtonModule,
   ],
   exports: [MealPageComponent],
