@@ -4,12 +4,14 @@
   </div>
 
   <f-meal-row [meal]="meal" *ngFor="let meal of meals"
-              (onDelete)="openConfirm($event)">
+              (onDelete)="openConfirm($event)"
+              (onEdit)="openForm($event)">
   </f-meal-row>
 
-  <f-meal-form (onCreate)="addAccount($event)"></f-meal-form>
+  <f-meal-form (onCreate)="addAccount($event)">
+  </f-meal-form>
 
-  <f-confirm-delete (onConfirm)="removeMeal($event)"></f-confirm-delete>
+  <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>
 
 </main>
 

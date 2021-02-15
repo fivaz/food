@@ -49,10 +49,11 @@ export class MealFormComponent implements OnInit {
   }
 
   updateAccount() {
-    const id = this.mealForm.get('id')?.value;
-    const name = this.mealForm.get('name')?.value;
-    const category: Category = this.mealForm.get('category')?.value;
-    this.meal = {id, name, category};
+    this.meal = {
+      id: this.mealForm.get('id')?.value,
+      name: this.mealForm.get('name')?.value,
+      category: this.mealForm.get('category')?.value
+    };
   }
 
   create() {
@@ -64,11 +65,11 @@ export class MealFormComponent implements OnInit {
   }
 
   edit() {
-    // this.accountService.edit(this.account)
-    //   .subscribe(account => {
-    //     this.onEdit.emit(account);
-    //     this.close();
-    //   });
+    this.api.edit(this.meal)
+      .subscribe(meal => {
+        this.onEdit.emit(meal);
+        this.close();
+      });
   }
 
   buildForm() {

@@ -21,6 +21,10 @@ export class MealService {
     return this.http.post<Meal>(API_URL, meal);
   }
 
+  edit(meal: Meal) {
+    return this.http.put<Meal>(API_URL + '/' + meal.id, meal);
+  }
+
   delete(id: number) {
     return this.http.delete(API_URL + '/' + id);
   }
