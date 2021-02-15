@@ -1,4 +1,5 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'f-confirm-delete',
@@ -6,28 +7,23 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class ConfirmDeleteComponent implements OnInit {
 
-  visible: boolean = false;
-  elementId: number | undefined;
-  @Input() element!: string;
-  @Output() onConfirm = new EventEmitter();
+  name: string;
+  id: number;
 
-  constructor() {
+  constructor(public dialogRef: MatDialogRef<ConfirmDeleteComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.name = this.data.name;
+    this.id = this.data.id;
   }
 
   ngOnInit(): void {
   }
 
-  open(id: number) {
-    this.visible = true;
-    this.elementId = id;
-  }
-
-  close() {
-    this.visible = false;
-  }
-
   confirm() {
-    this.onConfirm.emit(this.elementId);
-    this.visible = false;
+    this.dialogRef.close(this.id);
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 }

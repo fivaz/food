@@ -14,39 +14,31 @@ export class MealPageComponent implements OnInit {
 
   meals: Meal[] = [];
   columnsToDisplay = ['name', 'category', 'actions'];
-  //TODO check if all these ! are the best practices
-  @ViewChild(MealFormComponent, {static: false}) form!: MealFormComponent;
-  @ViewChild(ConfirmDeleteComponent, {static: false}) confirm!: ConfirmDeleteComponent;
   @ViewChild(MatTable) table!: MatTable<any>;
 
-  constructor(private api: MealService, public dialog: MatDialog) {
+  constructor(private api: MealService, public formDialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.api.findAll().subscribe(meals => this.meals = meals, console.log);
   }
 
-  openDialog(itemIndex?: number) {
-    console.log(itemIndex);
-
+  openFormDialog(itemIndex?: number) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    if (itemIndex != undefined) {
+    if (itemIndex != undefined)
       dialogConfig.data = this.meals[itemIndex];
-    }
 
-    const dialogRef = this.dialog.open(MealFormComponent, dialogConfig);
+    const formDialogRef = this.formDialog.open(MealFormComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(
+    formDialogRef.afterClosed().subscribe(
       meal => {
-        if (meal != undefined) {
+        if (meal != undefined)
           this.addOrUpdateMeal(meal);
-        }
-      }
-    );
+      });
   }
 
   addOrUpdateMeal(newMeal: Meal) {
@@ -58,8 +50,25 @@ export class MealPageComponent implements OnInit {
     this.table.renderRows();
   }
 
-  openConfirm(id: number) {
-    this.confirm.open(id);
+  openDeleteDialog(itemIndex: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    if (itemIndex != undefined)
+      dialogConfig.data = {
+        name: 'meal',
+        id: this.meals[itemIndex].id
+      };
+
+    const formDialogRef = this.formDialog.open(ConfirmDeleteComponent, dialogConfig);
+
+    formDialogRef.afterClosed().subscribe(
+      itemIndex => {
+        if (itemIndex != undefined)
+          this.removeMeal(itemIndex);
+      });
   }
 
   removeMeal(mealId: number) {
@@ -70,5 +79,6 @@ export class MealPageComponent implements OnInit {
   removeMealFromList(mealId: number) {
     const index = this.meals.findIndex(meal => meal.id === mealId);
     this.meals.splice(index, 1);
+    this.table.renderRows();
   }
 }

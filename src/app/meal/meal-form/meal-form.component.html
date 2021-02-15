@@ -1,5 +1,5 @@
 <div>
-  <h2 mat-dialog-title class="f-1">{{getTitle()}}</h2>
+  <h2 mat-dialog-title>{{getTitle()}}</h2>
 
   <!--  check how to use submit -->
   <mat-dialog-content [formGroup]="mealForm">
@@ -20,8 +20,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <!--    TODO check mat-buttons-->
-    <button class="mat-raised-button" (click)="close()">Close</button>
-    <button [disabled]="mealForm.invalid" class="mat-raised-button mat-primary" (click)="submit()">Save</button>
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button [disabled]="mealForm.invalid" color="primary" (click)="submit()">Save</button>
   </mat-dialog-actions>
 </div>

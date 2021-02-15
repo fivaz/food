@@ -14,37 +14,25 @@
 
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openDialog()">
+          <button mat-icon-button color="primary" (click)="openFormDialog()">
             <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
           </button>
         </mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent" (click)="openDialog(i)">
+          <button mat-icon-button color="accent" (click)="openFormDialog(i)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="accent">
+          <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
 
-
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
     </table>
-
-    <!--    <f-meal-row [meal]="meal" *ngFor="let meal of meals"-->
-    <!--                (onDelete)="openConfirm($event)"-->
-    <!--                (onEdit)="openForm($event)">-->
-    <!--    </f-meal-row>-->
-
-    <!--    <f-meal-form (onCreate)="addMeal($event)"-->
-    <!--                 (onEdit)="updateMeal($event)">-->
-    <!--    </f-meal-form>-->
-
-    <!--    <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>-->
   </mat-card-content>
 </mat-card>
 
