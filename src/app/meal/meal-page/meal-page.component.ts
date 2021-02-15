@@ -39,7 +39,13 @@ export class MealPageComponent implements OnInit {
     this.meals.splice(index, 1);
   }
 
-  addAccount(meal: Meal) {
+  addMeal(meal: Meal) {
     this.meals.push(meal);
+  }
+
+  updateMeal(newMeal: Meal) {
+    const index = this.meals.findIndex(meal => meal.id === newMeal.id);
+    this.meals.splice(index, 1);
+    this.meals[index] = newMeal;
   }
 }

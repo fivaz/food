@@ -8,7 +8,8 @@
               (onEdit)="openForm($event)">
   </f-meal-row>
 
-  <f-meal-form (onCreate)="addAccount($event)">
+  <f-meal-form (onCreate)="addMeal($event)"
+               (onEdit)="updateMeal($event)">
   </f-meal-form>
 
   <f-confirm-delete element="meal" (onConfirm)="removeMeal($event)"></f-confirm-delete>
