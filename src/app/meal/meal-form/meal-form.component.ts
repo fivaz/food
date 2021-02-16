@@ -26,16 +26,15 @@ export class MealFormComponent implements OnInit {
   filteredIngredients!: Observable<Ingredient[]>;
   addedIngredients: Ingredient[] = [];
 
+  //TODO check later how to remove the focus of the autocomplete input once I choose an option
+
   constructor(private formBuilder: FormBuilder,
               private mealAPI: MealService,
               private ingredientAPI: IngredientService,
               public dialogRef: MatDialogRef<MealFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Meal) {
 
-    if (this.data)
-      this.meal = this.data;
-    else
-      this.meal = this.emptyMeal();
+    this.meal = this.data || this.emptyMeal();
   }
 
   ngOnInit(): void {
@@ -86,7 +85,7 @@ export class MealFormComponent implements OnInit {
   }
 
   emptyMeal(): Meal {
-    return {id: 0, name: '', category: Category.breakfast};
+    return {id: 0, name: '', category: Category.breakfast, ingredients: []};
   }
 
   close() {
@@ -104,6 +103,8 @@ export class MealFormComponent implements OnInit {
   updateMeal() {
     this.meal.name = this.mealForm.get('name')?.value;
     this.meal.category = this.mealForm.get('category')?.value;
+    console.log(this.addedIngredients);
+    this.meal.ingredients = this.addedIngredients;
   }
 
   create() {
@@ -120,15 +121,10 @@ export class MealFormComponent implements OnInit {
     this.mealForm = this.formBuilder.group({
       name: [this.meal?.name || '', Validators.required],
       category: [this.meal?.category || this.categories[0]],
-      addedIngredients: [[]],
     });
   }
 
   getTitle(): string {
     return `${this.meal?.id ? 'edit' : 'create'} meal`;
-  }
-
-  onKey(event: any) {
-
   }
 }
