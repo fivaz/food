@@ -20,7 +20,7 @@ export class MealPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.findAll().subscribe(meals => this.meals = meals, console.log);
+    this.api.findAllFull().subscribe(meals => this.meals = meals, console.log);
   }
 
   openFormDialog(itemIndex?: number) {

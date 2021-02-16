@@ -34,11 +34,11 @@
     </mat-form-field>
 
     <mat-list>
-      <mat-list-item *ngFor="let ingredient of addedIngredients">
+      <mat-list-item *ngFor="let ingredient of meal.ingredients">
         <span style="margin-right: 10px">{{ingredient.name}}</span>
 
         <div *ngIf="ingredient.isCountable">
-          <input matInput type="number" placeholder="quantity" (keyup)="updateQuantity($event, ingredient.id)">
+          <input matInput type="number" placeholder="quantity" value="{{ingredient.mealIngredients?.quantity}}" (keyup)="updateQuantity($event, ingredient.id)">
           <span style="margin-left: 10px">{{ingredient.unit}}</span>
         </div>
         <button mat-icon-button color="accent" (click)="removeIngredient(ingredient.id)">
