@@ -35,10 +35,7 @@ export class MealPageComponent implements OnInit {
     const formDialogRef = this.formDialog.open(MealFormComponent, dialogConfig);
 
     formDialogRef.afterClosed().subscribe(
-      meal => {
-        if (meal != undefined)
-          this.addOrUpdateMeal(meal);
-      });
+      meal => meal && this.addOrUpdateMeal(meal));
   }
 
   addOrUpdateMeal(newMeal: Meal) {
@@ -64,11 +61,8 @@ export class MealPageComponent implements OnInit {
 
     const formDialogRef = this.formDialog.open(ConfirmDeleteComponent, dialogConfig);
 
-    formDialogRef.afterClosed().subscribe(
-      itemIndex => {
-        if (itemIndex != undefined)
-          this.removeMeal(itemIndex);
-      });
+    formDialogRef.afterClosed()
+      .subscribe(itemIndex => itemIndex && this.removeMeal(itemIndex));
   }
 
   removeMeal(mealId: number) {
