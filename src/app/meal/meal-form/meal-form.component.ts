@@ -1,12 +1,15 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Observable} from "rxjs";
+import {map, startWith} from "rxjs/operators";
+
 import {Meal} from "../meal";
 import {Category} from "../category.enum";
 import {MealService} from "../meal.service";
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import {IngredientService} from "../../ingredient/ingredient.service";
 import {Ingredient} from "../../ingredient/ingredient";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {IngredientService} from "../../ingredient/ingredient.service";
 
 @Component({
   selector: 'f-meal-form',
@@ -22,6 +25,7 @@ export class MealFormComponent implements OnInit {
   categories: Category[] = Object.values(Category);
   searchIcon = faSearch;
   ingredients: Ingredient[] = [];
+  filteredIngredients!: Observable<Ingredient[]>;
 
   constructor(private formBuilder: FormBuilder,
               private mealAPI: MealService,
@@ -36,6 +40,22 @@ export class MealFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.ingredientAPI.findAll()
+      .subscribe(ingredients => {
+        this.ingredients = ingredients;
+
+        this.filteredIngredients = this.mealForm.get('ingredients')!.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+      }, console.log);
+  }
+
+  private _filter(ingredientName: string): Ingredient[] {
+    return this.ingredients.filter(ingredient =>
+      ingredient.name.toLowerCase().includes(ingredientName.toLowerCase()));
   }
 
   emptyMeal(): Meal {
@@ -73,10 +93,8 @@ export class MealFormComponent implements OnInit {
     this.mealForm = this.formBuilder.group({
       name: [this.meal?.name || '', Validators.required],
       category: [this.meal?.category || this.categories[0]],
+      ingredients: [[]],
     });
-
-    this.ingredientAPI.findAll()
-      .subscribe(ingredients => this.ingredients = ingredients, console.log);
   }
 
   getTitle(): string {
