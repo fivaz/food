@@ -37,7 +37,7 @@
       <mat-list-item *ngFor="let ingredient of addedIngredients">
         <span style="margin-right: 10px">{{ingredient.name}}</span>
 
-        <input matInput type="number" placeholder="quantity">
+        <input matInput type="number" placeholder="quantity" (keyup)="updateQuantity($event, ingredient.id)">
 
         <button mat-icon-button color="accent" (click)="removeIngredient(ingredient.id)">
           <mat-icon aria-label="Delete">delete</mat-icon>

@@ -68,6 +68,13 @@ export class MealFormComponent implements OnInit {
     this.selectAvailableIngredients.setValue('');
   }
 
+
+  updateQuantity(event: Event, ingredientId: number) {
+    //TODO check if I can do it better
+    const index = this.addedIngredients.findIndex(ingredient => ingredient.id == ingredientId);
+    this.addedIngredients[index].quantity = Number((event.target as HTMLInputElement).value);
+  }
+
   displayName(ingredient: Ingredient): string {
     return ingredient && ingredient.name ? ingredient.name : '';
   }
@@ -119,5 +126,9 @@ export class MealFormComponent implements OnInit {
 
   getTitle(): string {
     return `${this.meal?.id ? 'edit' : 'create'} meal`;
+  }
+
+  onKey(event: any) {
+
   }
 }
