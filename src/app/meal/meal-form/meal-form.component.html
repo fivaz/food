@@ -6,10 +6,10 @@
 
     <mat-form-field>
       <input matInput placeholder="Name" formControlName="name">
+      <!--      TODO use mat-error-->
       <small *ngIf="mealForm.get('name')?.errors?.required" class="text-danger">
         name is required!
       </small>
-      <!--      TODO use mat-error-->
     </mat-form-field>
 
     <mat-form-field>
@@ -24,7 +24,7 @@
              placeholder="Pick one"
              aria-label="Ingredients"
              matInput
-             formControlName="availableIngredients"
+             [formControl]="selectAvailableIngredients"
              [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName" (optionSelected)="addIngredient()">
         <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">

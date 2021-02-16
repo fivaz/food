@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
@@ -21,7 +20,8 @@ export class MealFormComponent implements OnInit {
   mealForm!: FormGroup;
   meal: Meal;
   categories: Category[] = Object.values(Category);
-  searchIcon = faSearch;
+  selectAvailableIngredients = new FormControl();
+
   ingredients: Ingredient[] = [];
   filteredIngredients!: Observable<Ingredient[]>;
   addedIngredients: Ingredient[] = [];
@@ -45,7 +45,7 @@ export class MealFormComponent implements OnInit {
       .subscribe(ingredients => {
         this.ingredients = ingredients;
 
-        this.filteredIngredients = this.mealForm.get('availableIngredients')!.valueChanges
+        this.filteredIngredients = this.selectAvailableIngredients.valueChanges
           .pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : value.name),
@@ -56,16 +56,16 @@ export class MealFormComponent implements OnInit {
   }
 
   addIngredient() {
-    const index = this.ingredients.findIndex(ingredient => ingredient.id == this.mealForm.get('availableIngredients')?.value.id);
+    const index = this.ingredients.findIndex(ingredient => ingredient.id == this.selectAvailableIngredients.value.id);
     this.addedIngredients.push(...this.ingredients.splice(index, 1));
-    this.mealForm.get('availableIngredients')?.setValue('');
+    this.selectAvailableIngredients.setValue('');
   }
 
   removeIngredient(id: number) {
     const index = this.addedIngredients.findIndex(ingredient => ingredient.id == id);
     this.ingredients.push(...this.addedIngredients.splice(index, 1));
     //this is to display the ingredients back to the list
-    this.mealForm.get('availableIngredients')?.setValue('');
+    this.selectAvailableIngredients.setValue('');
   }
 
   displayName(ingredient: Ingredient): string {
@@ -113,7 +113,6 @@ export class MealFormComponent implements OnInit {
     this.mealForm = this.formBuilder.group({
       name: [this.meal?.name || '', Validators.required],
       category: [this.meal?.category || this.categories[0]],
-      availableIngredients: [[]],
       addedIngredients: [[]],
     });
   }
