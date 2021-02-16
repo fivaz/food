@@ -1,8 +1,11 @@
+import {MealIngredient} from "../meal/meal-ingredient";
+
 export interface Ingredient {
-  id: number,
-  name: string,
-  unit: string,
-  isCountable: boolean,
-  price: number,
-  quantity: number
+  id: number;
+  name: string;
+  unit: string;
+  isCountable: boolean;
+  price: number;
+  mealIngredients: MealIngredient;
+  quantity: number;
 }
