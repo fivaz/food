@@ -9,6 +9,7 @@
       <small *ngIf="mealForm.get('name')?.errors?.required" class="text-danger">
         name is required!
       </small>
+      <!--      TODO use mat-error-->
     </mat-form-field>
 
     <mat-form-field>
@@ -17,20 +18,32 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Ingredients</mat-label>
       <input type="text"
              placeholder="Pick one"
              aria-label="Ingredients"
              matInput
-             formControlName="ingredients"
+             formControlName="availableIngredients"
              [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName" (optionSelected)="addIngredient()">
         <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
           {{ingredient.name}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+
+    <mat-list>
+      <mat-list-item *ngFor="let ingredient of addedIngredients">
+        <span style="margin-right: 10px">{{ingredient.name}}</span>
+
+        <input matInput type="number" placeholder="quantity">
+
+        <button mat-icon-button color="accent" (click)="removeIngredient(ingredient.id)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
 
   </mat-dialog-content>
 
