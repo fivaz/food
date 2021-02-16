@@ -48,14 +48,20 @@ export class MealFormComponent implements OnInit {
         this.filteredIngredients = this.mealForm.get('ingredients')!.valueChanges
           .pipe(
             startWith(''),
-            map(value => this._filter(value))
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this._filter(name) : this.ingredients.slice())
           );
       }, console.log);
   }
 
-  private _filter(ingredientName: string): Ingredient[] {
-    return this.ingredients.filter(ingredient =>
-      ingredient.name.toLowerCase().includes(ingredientName.toLowerCase()));
+  displayName(ingredient: Ingredient): string {
+    return ingredient && ingredient.name ? ingredient.name : '';
+  }
+
+  private _filter(name: string): Ingredient[] {
+    const filterValue = name.toLowerCase();
+
+    return this.ingredients.filter(ingredient => ingredient.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   emptyMeal(): Meal {
