@@ -12,21 +12,23 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MealFormComponent} from "../meal-form/meal-form.component";
 import {MatButtonModule} from "@angular/material/button";
+import {NavbarModule} from "../../shared/navbar/navbar.module";
 
 @NgModule({
   declarations: [MealPageComponent],
-  imports: [
-    CommonModule,
-    MatSliderModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTableModule,
-    MatIconModule,
-    MatDialogModule,
-    ConfirmDeleteModule,
-    MealFormModule,
-    MatButtonModule,
-  ],
+    imports: [
+        CommonModule,
+        MatSliderModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTableModule,
+        MatIconModule,
+        MatDialogModule,
+        ConfirmDeleteModule,
+        MealFormModule,
+        MatButtonModule,
+        NavbarModule,
+    ],
   exports: [MealPageComponent],
   entryComponents: [MealFormComponent],
 })
