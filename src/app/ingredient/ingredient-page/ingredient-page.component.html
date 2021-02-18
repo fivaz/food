@@ -1,0 +1,43 @@
+<f-navbar title="Waser Food"></f-navbar>
+
+<mat-card>
+  <mat-card-title>Ingredients</mat-card-title>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="ingredients" class="mat-elevation-z8">
+
+      <mat-text-column name="name"></mat-text-column>
+      <mat-text-column name="unit"></mat-text-column>
+
+      <ng-container matColumnDef="isCountable">
+        <th mat-header-cell *matHeaderCellDef> Type</th>
+        <!--TODO add price to Salt-->
+        <td mat-cell *matCellDef="let ingredient"> {{ingredient.isCountable ? 'countable' : 'uncountable'}} </td>
+      </ng-container>
+
+      <mat-text-column name="price"></mat-text-column>
+      <mat-text-column name="quantity"></mat-text-column>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary">
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
