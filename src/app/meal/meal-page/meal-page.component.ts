@@ -29,6 +29,8 @@ export class MealPageComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
+    dialogConfig.width = '500px';
+
     if (itemIndex != undefined)
       dialogConfig.data = this.meals[itemIndex];
 

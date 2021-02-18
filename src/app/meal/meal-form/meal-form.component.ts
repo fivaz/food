@@ -35,7 +35,6 @@ export class MealFormComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: Meal) {
 
     this.meal = this.data || this.emptyMeal();
-    console.log(this.meal);
   }
 
   ngOnInit(): void {
@@ -60,13 +59,15 @@ export class MealFormComponent implements OnInit {
       }, console.log);
   }
 
-  emptyMealIngredient(ingredientId: number): MealIngredient {
-    return {
-      id: 0,
-      ingredientId: ingredientId,
-      mealId: this.meal.id,
-      quantity: 0
-    };
+  emptyMeal(): Meal {
+    return {id: 0, name: '', category: Category.breakfast, ingredients: []};
+  }
+
+  buildForm() {
+    this.mealForm = this.formBuilder.group({
+      name: [this.meal?.name || '', Validators.required],
+      category: [this.meal?.category || this.categories[0]],
+    });
   }
 
   addIngredient() {
@@ -74,6 +75,15 @@ export class MealFormComponent implements OnInit {
     this.availableIngredients[index].mealIngredients = this.emptyMealIngredient(this.availableIngredients[index].id);
     this.meal.ingredients.push(...this.availableIngredients.splice(index, 1));
     this.selectAvailableIngredients.setValue('');
+  }
+
+  emptyMealIngredient(ingredientId: number): MealIngredient {
+    return {
+      id: 0,
+      ingredientId: ingredientId,
+      mealId: this.meal.id,
+      quantity: 0
+    };
   }
 
   removeIngredient(id: number) {
@@ -99,10 +109,6 @@ export class MealFormComponent implements OnInit {
     const filterValue = name.toLowerCase();
 
     return this.availableIngredients.filter(ingredient => ingredient.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  emptyMeal(): Meal {
-    return {id: 0, name: '', category: Category.breakfast, ingredients: []};
   }
 
   close() {
@@ -131,13 +137,6 @@ export class MealFormComponent implements OnInit {
   edit() {
     this.mealAPI.edit(this.meal)
       .subscribe(meal => this.dialogRef.close(meal));
-  }
-
-  buildForm() {
-    this.mealForm = this.formBuilder.group({
-      name: [this.meal?.name || '', Validators.required],
-      category: [this.meal?.category || this.categories[0]],
-    });
   }
 
   getTitle(): string {

@@ -35,16 +35,25 @@
 
     <mat-list>
       <mat-list-item *ngFor="let ingredient of meal.ingredients">
-        <span style="margin-right: 10px">{{ingredient.name}}</span>
+        <div class="ingredients-grid">
+          <span class="item-name">{{ingredient.name}}</span>
 
-        <div *ngIf="ingredient.isCountable">
-          <input matInput type="number" placeholder="quantity" value="{{ingredient.mealIngredients?.quantity}}" (keyup)="updateQuantity($event, ingredient.id)">
-          <span style="margin-left: 10px">{{ingredient.unit}}</span>
+          <div class="item-block" *ngIf="ingredient.isCountable">
+
+            <mat-form-field appearance="outline" class="item-quantity">
+              <input matInput type="number" placeholder="quantity"
+                     value="{{ingredient.mealIngredients?.quantity}}"
+                     (keyup)="updateQuantity($event, ingredient.id)">
+            </mat-form-field>
+
+            <span class="item-unit">{{ingredient.unit}}</span>
+
+          </div>
+
+          <button class="item-button" mat-icon-button color="accent" (click)="removeIngredient(ingredient.id)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
         </div>
-        <button mat-icon-button color="accent" (click)="removeIngredient(ingredient.id)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-
       </mat-list-item>
     </mat-list>
 

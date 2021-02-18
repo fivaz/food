@@ -11,6 +11,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatDividerModule} from "@angular/material/divider";
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {MatIconModule} from "@angular/material/icon";
     MatSelectModule,
     MatButtonModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule,
+    MatDividerModule
   ],
   exports: [MealFormComponent]
 })
