@@ -8,6 +8,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {MatButtonModule} from '@angular/material/button';
 
 import {MealPageModule} from "./meal/meal-page/meal-page.module";
+import {IngredientPageModule} from "./ingredient/ingredient-page/ingredient-page.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {MealPageModule} from "./meal/meal-page/meal-page.module";
     //TODO check if I can remove this MatButton
     MatButtonModule,
     MealPageModule,
+    IngredientPageModule
   ],
   providers: [],
   bootstrap: [AppComponent],
