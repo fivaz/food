@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Meal} from "../meal";
 import {MealService} from "../meal.service";
 import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete.component";
 import {MealFormComponent} from "../meal-form/meal-form.component";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MatTable} from "@angular/material/table";
+import {Meal} from "../meal";
 
 @Component({
   templateUrl: './meal-page.component.html',

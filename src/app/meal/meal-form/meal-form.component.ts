@@ -60,7 +60,8 @@ export class MealFormComponent implements OnInit {
   }
 
   emptyMeal(): Meal {
-    return {id: 0, name: '', category: Category.breakfast, ingredients: []};
+    //TODO check if I can do this empty object better
+    return new Meal(Category.breakfast, 0, [], '');
   }
 
   buildForm() {
@@ -129,6 +130,7 @@ export class MealFormComponent implements OnInit {
   }
 
   create() {
+    console.log(this.meal);
     this.mealAPI.create(this.meal)
       .subscribe(meal => this.dialogRef.close(meal));
   }
