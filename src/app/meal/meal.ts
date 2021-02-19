@@ -18,7 +18,7 @@ export class Meal implements MealInterface {
   getPrice(): number {
     return this.ingredients.reduce((total, ingredient) => {
       if (ingredient.isCountable)
-        return total + ingredient.price;
+        return total + (ingredient.price * ingredient.mealIngredients.quantity);
       else
         return total;
     }, 0);

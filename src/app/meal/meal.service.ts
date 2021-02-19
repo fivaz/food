@@ -46,11 +46,13 @@ export class MealService {
 
   create(meal: Meal) {
     console.log(meal);
-    return this.http.post<Meal>(API_URL, meal);
+    return this.http.post<Meal>(API_URL, meal)
+      .pipe(map(mealObject => this.buildMeal(mealObject)));
   }
 
   edit(meal: Meal) {
-    return this.http.put<Meal>(`${API_URL}/${meal.id}`, meal);
+    return this.http.put<Meal>(`${API_URL}/${meal.id}`, meal)
+      .pipe(map(mealObject => this.buildMeal(mealObject)));
   }
 
   delete(id: number) {
