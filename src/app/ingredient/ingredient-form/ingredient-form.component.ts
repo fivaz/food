@@ -71,8 +71,8 @@ export class IngredientFormComponent implements OnInit {
     this.ingredient.name = this.ingredientForm.get('name')?.value;
     this.ingredient.unit = this.ingredientForm.get('unit')?.value;
     this.ingredient.isCountable = this.ingredientForm.get('isCountable')?.value == '1';
-    this.ingredient.price = this.ingredientForm.get('price')?.value;
-    this.ingredient.quantity = this.ingredientForm.get('quantity')?.value;
+    this.ingredient.price = this.ingredientForm.get('price')?.value || null;
+    this.ingredient.quantity = this.ingredientForm.get('quantity')?.value || null;
   }
 
   create() {
