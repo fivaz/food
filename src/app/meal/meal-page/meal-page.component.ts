@@ -13,7 +13,7 @@ import {Meal} from "../meal";
 export class MealPageComponent implements OnInit {
 
   meals: Meal[] = [];
-  columnsToDisplay = ['category', 'name', 'actions'];
+  columnsToDisplay = ['category', 'name', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<any>;
 
   constructor(private api: MealService, public formDialog: MatDialog) {

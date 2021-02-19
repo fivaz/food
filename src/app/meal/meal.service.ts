@@ -3,6 +3,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Meal} from "./meal";
 import {Ingredient} from "../ingredient/ingredient";
+import {map} from "rxjs/operators";
+import {MealInterface} from "./meal.interface";
 
 const API_URL = environment.apiUrl + '/meals';
 
@@ -15,16 +17,27 @@ export class MealService {
   }
 
   findAll() {
-    return this.http.get<Meal[]>(API_URL);
+    return this.http.get<Meal[]>(API_URL)
+      .pipe(map(mealsObject => this.buildMeals(mealsObject)));
   }
 
   findAllFull() {
     const params = new HttpParams().set('full', 'true');
-    return this.http.get<Meal[]>(API_URL, {params});
+    return this.http.get<Meal[]>(API_URL, {params})
+      .pipe(map(mealsObject => this.buildMeals(mealsObject)));
+  }
+
+  buildMeals(objects: MealInterface[]) {
+    return objects.map(object => this.buildMeal(object));
+  }
+
+  buildMeal(object: MealInterface) {
+    return new Meal(object.category, object.id, object.ingredients, object.name);
   }
 
   find(id: number) {
-    return this.http.get<Meal[]>(`${API_URL}/${id}`);
+    return this.http.get<Meal>(`${API_URL}/${id}`)
+      .pipe(map(mealObject => this.buildMeal(mealObject)));
   }
 
   findIngredients(id: number) {
