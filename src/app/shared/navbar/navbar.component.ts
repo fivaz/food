@@ -4,12 +4,10 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'f-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls:['navbar.component.css']
+  styleUrls: ['navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  @Input() title: string = '';
-
-  showFiller = false;
+  @Input() title: string = 'Waser Food';
 
   constructor(private router: Router) {
   }
@@ -17,11 +15,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToMealsPage() {
+  goToHome() {
     this.router.navigateByUrl('/');
-  }
-
-  goToIngredientsPage() {
-    this.router.navigateByUrl('/ingredients');
   }
 }
