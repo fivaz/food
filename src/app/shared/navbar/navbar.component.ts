@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'f-navbar',
   templateUrl: './navbar.component.html',
+  styleUrls:['navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   @Input() title: string = '';
