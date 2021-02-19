@@ -7,19 +7,21 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {SidebarItemModule} from "../sidebar-item/sidebar-item.module";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
   declarations: [NavbarComponent],
-    imports: [
-        CommonModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatButtonModule,
-        MatListModule,
-        SidebarItemModule
-    ],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatListModule,
+    SidebarItemModule,
+    MatCardModule
+  ],
   exports: [NavbarComponent]
 })
 export class NavbarModule {

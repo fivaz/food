@@ -1,3 +1,7 @@
-.sidenav{
-  width: 20%;
+.mat-column-name {
+  flex: 10%;
+}
+
+.mat-column-name {
+  flex: 70%;
 }

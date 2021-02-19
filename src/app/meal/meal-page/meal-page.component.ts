@@ -13,7 +13,7 @@ import {MatTable} from "@angular/material/table";
 export class MealPageComponent implements OnInit {
 
   meals: Meal[] = [];
-  columnsToDisplay = ['name', 'category', 'actions'];
+  columnsToDisplay = ['category', 'name', 'actions'];
   @ViewChild(MatTable) table!: MatTable<any>;
 
   constructor(private api: MealService, public formDialog: MatDialog) {

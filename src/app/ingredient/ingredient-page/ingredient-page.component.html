@@ -1,43 +1,54 @@
-<f-navbar title="Waser Food"></f-navbar>
+<f-navbar>
+  <h2>Ingredients</h2>
+  <mat-table [dataSource]="ingredients" class="mat-elevation-z8">
+    <!--Name-->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let ingredient"> {{ingredient.name}} </mat-cell>
+    </ng-container>
+    <!--Unit-->
+    <ng-container matColumnDef="unit">
+      <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
+      <mat-cell *matCellDef="let ingredient"> {{ingredient.unit}} </mat-cell>
+    </ng-container>
+    <!--IsCountable-->
+    <ng-container matColumnDef="isCountable" class="test">
+      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+      <!--TODO add price to Salt-->
+      <mat-cell *matCellDef="let ingredient"> {{ingredient.isCountable ? 'countable' : 'uncountable'}} </mat-cell>
+    </ng-container>
+    <!--Price-->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+      <mat-cell *matCellDef="let ingredient"> {{ingredient.price}} </mat-cell>
+    </ng-container>
+    <!--Quantity-->
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+      <mat-cell *matCellDef="let ingredient"> {{ingredient.quantity}} </mat-cell>
+    </ng-container>
+    <!--Actions-->
+    <ng-container matColumnDef="actions">
 
-<mat-card>
-  <mat-card-title>Ingredients</mat-card-title>
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="openFormDialog()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
 
-  <mat-card-content>
-    <table mat-table [dataSource]="ingredients" class="mat-elevation-z8">
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="openFormDialog(i)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
 
-      <mat-text-column name="name"></mat-text-column>
-      <mat-text-column name="unit"></mat-text-column>
+        <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
 
-      <ng-container matColumnDef="isCountable">
-        <th mat-header-cell *matHeaderCellDef> Type</th>
-        <!--TODO add price to Salt-->
-        <td mat-cell *matCellDef="let ingredient"> {{ingredient.isCountable ? 'countable' : 'uncountable'}} </td>
-      </ng-container>
+    </ng-container>
 
-      <mat-text-column name="price"></mat-text-column>
-      <mat-text-column name="quantity"></mat-text-column>
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openFormDialog()">
-            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-          </button>
-        </mat-header-cell>
-
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent" (click)="openFormDialog(i)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-
-          <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
-            <mat-icon aria-label="Delete" >delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+  </mat-table>
+</f-navbar>
