@@ -1,0 +1,34 @@
+<div>
+  <h2 mat-dialog-title>{{getTitle()}}</h2>
+
+  <mat-dialog-content [formGroup]="ingredientForm">
+
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Unit" formControlName="unit">
+    </mat-form-field>
+
+    <mat-radio-group aria-label="Select an option">
+      <mat-label>Type</mat-label>
+      <mat-radio-button value="1">countable</mat-radio-button>
+      <mat-radio-button value="0">uncountable</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field>
+      <input matInput placeholder="Price" formControlName="price">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Quantity" formControlName="quantity">
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="submit()">Save</button>
+  </mat-dialog-actions>
+</div>

@@ -129,7 +129,6 @@ export class MealFormComponent implements OnInit {
   }
 
   create() {
-    console.log(this.meal);
     this.mealAPI.create(this.meal)
       .subscribe(meal => this.dialogRef.close(meal));
   }

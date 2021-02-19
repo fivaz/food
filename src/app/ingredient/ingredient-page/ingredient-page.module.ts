@@ -6,6 +6,7 @@ import {NavbarModule} from "../../shared/navbar/navbar.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {IngredientFormModule} from "../ingredient-form/ingredient-form.module";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatButtonModule} from "@angular/material/button";
     NavbarModule,
     MatTableModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    IngredientFormModule
   ],
   exports: [IngredientPageComponent]
 })
