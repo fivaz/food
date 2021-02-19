@@ -1,3 +1,27 @@
 <mat-toolbar color="primary">
-  <span>{{title}}</span>
+  <span>Waser Food</span>
 </mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-list>
+      <mat-list-item>
+        <a matLine href="#"></a>
+        <button mat-icon-button (click)="goToMealsPage()">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">set_meal</mat-icon>
+        </button>
+
+        Ingredients
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon aria-hidden="false" aria-label="Example home icon">restaurant</mat-icon>
+        Meals
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

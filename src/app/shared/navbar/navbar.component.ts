@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'f-navbar',
@@ -7,9 +8,19 @@ import {Component, Input, OnInit} from '@angular/core';
 export class NavbarComponent implements OnInit {
   @Input() title: string = '';
 
-  constructor() {
+  showFiller = false;
+
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
+  }
+
+  goToMealsPage() {
+    this.router.navigateByUrl('/');
+  }
+
+  goToIngredientsPage() {
+    this.router.navigateByUrl('/ingredients');
   }
 }

@@ -1,35 +1,36 @@
-<f-navbar title="Waser Food"></f-navbar>
+<!--<f-navbar title="Waser Food">-->
+<f-navbar>
+  <mat-card>
+    <mat-card-title>Meals</mat-card-title>
 
-<mat-card>
-  <mat-card-title>Meals</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="meals" class="mat-elevation-z8">
 
-  <mat-card-content>
-    <table mat-table [dataSource]="meals" class="mat-elevation-z8">
+        <mat-text-column name="category"></mat-text-column>
+        <mat-text-column name="name"></mat-text-column>
 
-      <mat-text-column name="category"></mat-text-column>
-      <mat-text-column name="name"></mat-text-column>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" (click)="openFormDialog()">
+              <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+            </button>
+          </mat-header-cell>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openFormDialog()">
-            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-          </button>
-        </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="accent" (click)="openFormDialog(i)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent" (click)="openFormDialog(i)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
+            <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
 
-          <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</f-navbar>
 
