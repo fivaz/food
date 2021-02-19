@@ -4,6 +4,7 @@ import {IngredientService} from "../ingredient.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {IngredientFormComponent} from "../ingredient-form/ingredient-form.component";
 import {MatTable} from "@angular/material/table";
+import {ConfirmDeleteComponent} from "../../shared/confirm-delete/confirm-delete.component";
 
 @Component({
   templateUrl: './ingredient-page.component.html',
@@ -52,6 +53,35 @@ export class IngredientPageComponent implements OnInit {
       this.ingredients.push(newIngredient);
     else
       this.ingredients[index] = newIngredient;
+    this.table.renderRows();
+  }
+
+  openDeleteDialog(itemIndex: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    if (itemIndex != undefined)
+      dialogConfig.data = {
+        name: 'ingredient',
+        id: this.ingredients[itemIndex].id
+      };
+
+    const formDialogRef = this.formDialog.open(ConfirmDeleteComponent, dialogConfig);
+
+    formDialogRef.afterClosed()
+      .subscribe(itemIndex => itemIndex && this.removeIngredient(itemIndex));
+  }
+
+  removeIngredient(mealId: number) {
+    this.api.delete(mealId).subscribe(() =>
+      this.removeIngredientFromList(mealId));
+  }
+
+  removeIngredientFromList(ingredientId: number) {
+    const index = this.ingredients.findIndex(ingredient => ingredient.id === ingredientId);
+    this.ingredients.splice(index, 1);
     this.table.renderRows();
   }
 }

@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Ingredient} from "../ingredient";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {IngredientService} from "../ingredient.service";
 
 @Component({
   selector: 'f-ingredient-form',
@@ -12,7 +13,8 @@ export class IngredientFormComponent implements OnInit {
   ingredientForm!: FormGroup;
   ingredient: Ingredient;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private ingredientAPI: IngredientService,
+              private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<IngredientFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Ingredient) {
 
@@ -27,10 +29,14 @@ export class IngredientFormComponent implements OnInit {
     this.ingredientForm = this.formBuilder.group({
       name: [this.ingredient?.name || '', Validators.required],
       unit: [this.ingredient?.unit || '', Validators.required],
-      isCountable: [this.ingredient?.isCountable || ''],
+      isCountable: [this.ingredient?.id ? this.toString(this.ingredient?.isCountable) : '1'],
       price: [this.ingredient?.price || ''],
       quantity: [this.ingredient?.quantity || ''],
     });
+  }
+
+  toString(isCountable: boolean) {
+    return String(Number(isCountable));
   }
 
   getTitle(): string {
@@ -62,18 +68,20 @@ export class IngredientFormComponent implements OnInit {
   }
 
   updateIngredient() {
-    // this.ingredient.name = this.ingredientForm.get('name')?.value;
-    // this.ingredient.category = this.ingredientForm.get('category')?.value;
+    this.ingredient.name = this.ingredientForm.get('name')?.value;
+    this.ingredient.unit = this.ingredientForm.get('unit')?.value;
+    this.ingredient.isCountable = this.ingredientForm.get('isCountable')?.value == '1';
+    this.ingredient.price = this.ingredientForm.get('price')?.value;
+    this.ingredient.quantity = this.ingredientForm.get('quantity')?.value;
   }
 
   create() {
-    // this.ingredientAPI.create(this.ingredient)
-    //   .subscribe(ingredient => this.dialogRef.close(ingredient));
+    this.ingredientAPI.create(this.ingredient)
+      .subscribe(ingredient => this.dialogRef.close(ingredient));
   }
 
   edit() {
-    // this.ingredientAPI.edit(this.ingredient)
-    //   .subscribe(ingredient => this.dialogRef.close(ingredient));
+    this.ingredientAPI.edit(this.ingredient)
+      .subscribe(ingredient => this.dialogRef.close(ingredient));
   }
-
 }

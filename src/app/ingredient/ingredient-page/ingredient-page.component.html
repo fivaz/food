@@ -26,12 +26,12 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent">
+          <button mat-icon-button color="accent" (click)="openFormDialog(i)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="accent">
-            <mat-icon aria-label="Delete">delete</mat-icon>
+          <button mat-icon-button color="accent" (click)="openDeleteDialog(i)">
+            <mat-icon aria-label="Delete" >delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
