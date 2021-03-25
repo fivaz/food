@@ -24,6 +24,7 @@ export class MealFormComponent implements OnInit {
   selectAvailableIngredients = new FormControl();
 
   availableIngredients: Ingredient[] = [];
+  addedIngredients: Ingredient[] = [];
   filteredIngredients!: Observable<Ingredient[]>;
 
   //TODO check later how to remove the focus of the autocomplete input once I choose an option
@@ -43,10 +44,12 @@ export class MealFormComponent implements OnInit {
     this.ingredientAPI.findAll()
       .subscribe(allIngredients => {
         //remove from list the existing ingredients
-        if (this.meal.id)
+        if (this.meal.id) {
+          this.addedIngredients = this.meal.ingredients;
+
           this.availableIngredients = allIngredients.filter(ingredient =>
-            !this.meal.ingredients.find(existingIngredient => ingredient.id == existingIngredient.id));
-        else
+            !this.addedIngredients.find(existingIngredient => ingredient.id == existingIngredient.id));
+        } else
           this.availableIngredients = allIngredients;
 
         this.filteredIngredients = this.selectAvailableIngredients.valueChanges
@@ -73,8 +76,8 @@ export class MealFormComponent implements OnInit {
 
   addIngredient() {
     const index = this.availableIngredients.findIndex(ingredient => ingredient.id == this.selectAvailableIngredients.value.id);
-    this.availableIngredients[index].mealIngredients = this.emptyMealIngredient(this.availableIngredients[index].id);
-    this.meal.ingredients.push(...this.availableIngredients.splice(index, 1));
+    // this.availableIngredients[index].mealIngredients = this.emptyMealIngredient(this.availableIngredients[index].id);
+    this.addedIngredients.push(...this.availableIngredients.splice(index, 1));
     this.selectAvailableIngredients.setValue('');
   }
 
@@ -88,18 +91,18 @@ export class MealFormComponent implements OnInit {
   }
 
   removeIngredient(id: number) {
-    const index = this.meal.ingredients.findIndex(ingredient => ingredient.id == id);
-    this.availableIngredients.push(...this.meal.ingredients.splice(index, 1));
+    const index = this.addedIngredients.findIndex(ingredient => ingredient.id == id);
+    this.availableIngredients.push(...this.addedIngredients.splice(index, 1));
     //this is to display the ingredients back to the list
     this.selectAvailableIngredients.setValue('');
   }
 
   updateQuantity(event: Event, ingredientId: number) {
     //TODO check if I can do it better
-    const index = this.meal.ingredients.findIndex(ingredient => ingredient.id == ingredientId);
-    if (this.meal.ingredients[index].mealIngredients == undefined)
-      this.meal.ingredients[index].mealIngredients = this.emptyMealIngredient(index);
-    this.meal.ingredients[index].mealIngredients.quantity = Number((event.target as HTMLInputElement).value);
+    const index = this.addedIngredients.findIndex(ingredient => ingredient.id == ingredientId);
+    // if (this.addedIngredients[index].mealIngredients == undefined)
+    //   this.addedIngredients[index].mealIngredients = this.emptyMealIngredient(index);
+    this.addedIngredients[index].mealIngredients.quantity = Number((event.target as HTMLInputElement).value);
   }
 
   displayName(ingredient: Ingredient): string {
@@ -127,6 +130,7 @@ export class MealFormComponent implements OnInit {
   updateMeal() {
     this.meal.name = this.mealForm.get('name')?.value;
     this.meal.category = this.mealForm.get('category')?.value;
+    this.meal.ingredients = this.addedIngredients;
   }
 
   create() {

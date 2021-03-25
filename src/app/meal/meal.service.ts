@@ -27,13 +27,6 @@ export class MealService {
       .pipe(map(mealsObject => this.buildMeals(mealsObject)));
   }
 
-  buildMeals(objects: MealInterface[]) {
-    return objects.map(object => this.buildMeal(object));
-  }
-
-  buildMeal(object: MealInterface) {
-    return new Meal(object.category, object.id, object.ingredients, object.name);
-  }
 
   find(id: number) {
     return this.http.get<Meal>(`${API_URL}/${id}`)
@@ -57,5 +50,13 @@ export class MealService {
 
   delete(id: number) {
     return this.http.delete(`${API_URL}/${id}`);
+  }
+
+  buildMeals(objects: MealInterface[]) {
+    return objects.map(object => this.buildMeal(object));
+  }
+
+  buildMeal(object: MealInterface) {
+    return new Meal(object.category, object.id, object.ingredients, object.name);
   }
 }

@@ -1,4 +1,4 @@
-import {MealIngredient} from "../meal/meal-ingredient";
+import {MealIngredientInterface} from "../meal/meal-ingredient.interface";
 
 export interface IngredientInterface {
   id: number;
@@ -6,6 +6,6 @@ export interface IngredientInterface {
   unit: string;
   isCountable: boolean;
   price: number;
-  mealIngredients: MealIngredient;
+  mealIngredients: MealIngredientInterface;
   quantity: number;
 }
